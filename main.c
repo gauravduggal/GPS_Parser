@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#define RING_LENGTH 200
+#define RING_LENGTH 4096
 #define DEBUG
 #ifdef DEBUG
     #define DBG(fmt, args...);   printf("" fmt, ##args)
@@ -308,7 +308,7 @@ srand(time(NULL));
 gps_ring gps1;
 gps_init(&gps1);
 GPSinfo gps_info;
-DBG("len %d\n",ring_len(&gps1));
+//DBG("len %d\n",ring_len(&gps1));
 char str[100];
 FILE *fp=NULL;
 fp = fopen( "GPS.txt" , "r+" );
@@ -318,11 +318,11 @@ node iter;
 #if 1
 while(1)
 {
+	//read from file // RS232
 	i = (unsigned int) fread(byte_buf, 1, 100, fp);
     if(i==0)
     	exit(0);
-	//i=((uint8_t)rand())/4;
-	//printf("bytes to be read %d\n",i);
+	
 	while(i--)
 		fill_ring(read(byte_buf,ctr++),&gps1);
 	ctr=0;
